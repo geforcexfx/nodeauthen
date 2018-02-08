@@ -1,5 +1,74 @@
-extends layout
 
-block content
-  h1 Members Area
-  p Welcome to the members area
+
+
+html
+
+  head
+
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(href='/stylesheets/style.css', rel='stylesheet')
+    script(type='text/javascript', src="http://code.jquery.com/jquery-1.9.1.min.js").
+  body
+
+    extends layout
+
+    block content
+      h1 My little IoT website
+      .container-fluid
+        .left-element
+          img(src='/stylesheets/cody.jpg', alt='My little IoT website', style='width:200px;height:200px;')
+          // Trigger/Open The Modal
+          p Please choose functions
+          button#myBtn See room climate
+
+
+          p Click to turn the airpump:
+          <input type="button" value="ON" onclick="return change(this);" >
+          p#fold
+          p Status of the airpump:
+          p#peep "unknown, you need to click the above button to know the status of the airpump"
+          p
+        .right-element
+          p
+            iframe(src='http://192.168.1.186:8088/', name='targetframe', width='640', height='480', allowtransparency='true', scrolling='no', frameborder='0')
+      // The Modal
+      #myModal.modal
+        // Modal content
+        .modal-content
+          span.close ×
+          p Click to check temperature and humidity
+          iframe(src='http://192.168.1.28:8089')
+      #result(style='display:none;')
+      script.
+        // Get the modal
+        var modal = document.getElementById('myModal');
+        // Get the button that opens the modal
+        var btn = document.getElementById("myBtn");
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
+        // When the user clicks the button, open the modal
+        btn.onclick = function() {
+        modal.style.display = "block";
+        }
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+        modal.style.display = "none";
+        }
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+        if (event.target == modal) {
+        modal.style.display = "none";
+        }
+        }
+      script.
+        function change( el )
+        {
+          if ( el.value === "ON" ){
+              el.value = "OFF";
+              document.getElementById("peep").innerHTML = "ON";
+              }
+          else{
+              el.value = "ON";
+              document.getElementById("peep").innerHTML = "OFF";
+              }
+        }
